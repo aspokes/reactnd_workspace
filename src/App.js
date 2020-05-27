@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ListUserProfiles from './ListUserProfiles';
 import './App.css';
 import logo from './logo.svg';
 
@@ -97,6 +98,41 @@ const movies = {
   },
 };
 
+function getUser(userid){
+  var usr = '';
+  userid = Number(userid);
+   Object.keys(users).forEach(function (k) {
+     if(userid === users[k].id){
+      usr = users[k].name
+     }
+  }); 
+  return usr;
+}
+
+function getMovie(movieid){
+  let value = '';
+  movieid = Number(movieid);
+   Object.keys(movies).forEach(function (k) {
+     
+     if(movieid === movies[k].id){
+      value = movies[k].name
+     }
+  }); 
+  return value;
+}
+
+
+let userprofiles = [];
+
+for (const profile of profiles) {
+	userprofiles.push({
+		id: profile.id,
+  		username: getUser(profile.userID),
+		title: getMovie(profile.favoriteMovieID)
+    })
+}
+//console.log(userprofiles);
+
 class App extends Component {
   render() {
     return (
@@ -106,6 +142,7 @@ class App extends Component {
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
         <h2>Favorite Movies</h2>
+			<ListUserProfiles userprofiles={userprofiles}/>
       </div>
     );
   }
